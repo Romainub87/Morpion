@@ -114,7 +114,7 @@ function matchNul(pions) {
 }
 
 // Fonction qui gére l'affichage du statut du jeu en cours
-const Afficheur = function (element) {
+const AfficheurStatut = function (element) {
   const affichage = element;
 
   function setText(message) {
@@ -130,8 +130,8 @@ function main() {
   const joueurs = ["X", "O"];
   let tour = 0;
   var peutJouer = true;
-  const afficheur = new Afficheur(document.querySelector("#StatutJeu"));
-  afficheur.sendMessage(
+  const statut = new AfficheurStatut(document.querySelector("#StatutJeu"));
+  statut.sendMessage(
     "Le jeu peut commencer ! <br /> Joueur " +
       joueurs[tour] +
       " c'est votre tour."
@@ -141,7 +141,7 @@ function main() {
       Cases[i].addEventListener("click", function () {
         if (!estValide(this)) {
           if (peutJouer == true) {
-            afficheur.sendMessage(
+            statut.sendMessage(
               "Case occupée ! <br />Joueur " +
                 joueurs[tour] +
                 " c'est toujours à vous !"
@@ -153,7 +153,7 @@ function main() {
 
           if (jeuEstFini) {
             peutJouer = false;
-            afficheur.sendMessage(
+            statut.sendMessage(
               "Le joueur " +
                 joueurs[tour] +
                 ' a gagné ! <br /> <a href="./index.html">Rejouer</a>'
@@ -163,7 +163,7 @@ function main() {
           }
           if (matchNul(Cases)) {
             peutJouer = false;
-            afficheur.sendMessage(
+            statut.sendMessage(
               'Match Nul ! <br/> <a href="./index.html" unset>Rejouer</a>'
             );
 
@@ -172,7 +172,7 @@ function main() {
           if (peutJouer == true) {
             tour++;
             tour = tour % 2;
-            afficheur.sendMessage(
+            statut.sendMessage(
               "Joueur " + joueurs[tour] + " c'est à vous !"
             );
           }
