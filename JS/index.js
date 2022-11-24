@@ -4,8 +4,10 @@ function estValide(button) {
 }
 
 // Fonction qui ajoute le symbole correspondant au joueur à la case sélectionnée
-function setSymbol(btn, symbole) {
-  btn.innerHTML = symbole;
+function setSymbol(btn, symbole, peutJouer) {
+  if (peutJouer == 1) {
+    btn.innerHTML = symbole;
+  }
 }
 
 /* 
@@ -127,46 +129,56 @@ function main() {
   const Cases = document.querySelectorAll("#Jeu button");
   const joueurs = ["X", "O"];
   let tour = 0;
-  const jeuEstFini = false;
+  let peutJouer = 1;
   const afficheur = new Afficheur(document.querySelector("#StatutJeu"));
   afficheur.sendMessage(
     "Le jeu peut commencer ! <br /> Joueur " +
       joueurs[tour] +
       " c'est votre tour."
   );
-  for (let i = 0, len = Cases.length; i < len; i++) {
-    Cases[i].addEventListener("click", function () {
-      if (jeuEstFini) return;
+  if (peutJouer) {
+    for (let i = 0, len = Cases.length; i < len; i++) {
+      Cases[i].addEventListener("click", function () {
+        if (!estValide(this)) {
+          if (peutJouer == 1) {
+            afficheur.sendMessage(
+              "Case occupée ! <br />Joueur " +
+                joueurs[tour] +
+                " c'est toujours à vous !"
+            );
+          }
+        } else {
+          setSymbol(this, joueurs[tour], peutJouer);
+          let jeuEstFini = rechercherVainqueur(Cases, joueurs, tour);
 
-      if (!estValide(this)) {
-        afficheur.sendMessage(
-          "Case occupée ! <br />Joueur " +
-            joueurs[tour] +
-            " c'est toujours à vous !"
-        );
-      } else {
-        setSymbol(this, joueurs[tour]);
-        let jeuEstFini = rechercherVainqueur(Cases, joueurs, tour);
+          if (jeuEstFini) {
+            peutJouer = 0;
+            afficheur.sendMessage(
+              "Le joueur " +
+                joueurs[tour] +
+                ' a gagné ! <br /> <a href="./index.html">Rejouer</a>'
+            );
 
-        if (jeuEstFini) {
-          afficheur.sendMessage(
-            "Le joueur " +
-              joueurs[tour] +
-              ' a gagné ! <br /> <a href="index.html">Rejouer</a>'
-          );
-          return;
+            return;
+          }
+          if (matchNul(Cases)) {
+            peutJouer = 0;
+            afficheur.sendMessage(
+              'Match Nul ! <br/> <a href="./index.html" unset>Rejouer</a>'
+            );
+
+            return;
+          }
+          if (peutJouer == 1) {
+            tour++;
+            tour = tour % 2;
+            afficheur.sendMessage(
+              "Joueur " + joueurs[tour] + " c'est à vous !"
+            );
+          }
         }
-        if (matchNul(Cases)) {
-          afficheur.sendMessage(
-            'Match Nul ! <br/> <a href="index.html" unset>Rejouer</a>'
-          );
-          return;
-        }
-        tour++;
-        tour = tour % 2;
-        afficheur.sendMessage("Joueur " + joueurs[tour] + " c'est à vous !");
-      }
-    });
+      });
+    }
   }
 }
 
