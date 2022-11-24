@@ -129,18 +129,18 @@ function main() {
   const Cases = document.querySelectorAll("#Jeu button");
   const joueurs = ["X", "O"];
   let tour = 0;
-  let peutJouer = 1;
+  var peutJouer = true;
   const afficheur = new Afficheur(document.querySelector("#StatutJeu"));
   afficheur.sendMessage(
     "Le jeu peut commencer ! <br /> Joueur " +
       joueurs[tour] +
       " c'est votre tour."
   );
-  if (peutJouer) {
+  if (peutJouer == true) {
     for (let i = 0, len = Cases.length; i < len; i++) {
       Cases[i].addEventListener("click", function () {
         if (!estValide(this)) {
-          if (peutJouer == 1) {
+          if (peutJouer == true) {
             afficheur.sendMessage(
               "Case occupée ! <br />Joueur " +
                 joueurs[tour] +
@@ -152,7 +152,7 @@ function main() {
           let jeuEstFini = rechercherVainqueur(Cases, joueurs, tour);
 
           if (jeuEstFini) {
-            peutJouer = 0;
+            peutJouer = false;
             afficheur.sendMessage(
               "Le joueur " +
                 joueurs[tour] +
@@ -162,14 +162,14 @@ function main() {
             return;
           }
           if (matchNul(Cases)) {
-            peutJouer = 0;
+            peutJouer = false;
             afficheur.sendMessage(
               'Match Nul ! <br/> <a href="./index.html" unset>Rejouer</a>'
             );
 
             return;
           }
-          if (peutJouer == 1) {
+          if (peutJouer == true) {
             tour++;
             tour = tour % 2;
             afficheur.sendMessage(
