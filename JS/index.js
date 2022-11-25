@@ -156,7 +156,7 @@ function main() {
             statut.sendMessage(
               "Le joueur " +
                 joueurs[tour] +
-                ' a gagné ! <br /> <a href="./index.html">Rejouer</a>'
+                ' a gagné ! <br /> <a href="index.html">Rejouer</a>'
             );
 
             return;
@@ -164,7 +164,7 @@ function main() {
           if (matchNul(Cases)) {
             peutJouer = false;
             statut.sendMessage(
-              'Match Nul ! <br/> <a href="./index.html" unset>Rejouer</a>'
+              'Match Nul ! <br/> <a href="index.html" unset>Rejouer</a>'
             );
 
             return;
