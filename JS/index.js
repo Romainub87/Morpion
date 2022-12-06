@@ -1,3 +1,20 @@
+
+// Logique générale dans la page
+
+$(document).ready(function() {
+  $("#PartieJeu").hide();
+  
+})
+
+$("#submit").on('click', function(){
+  var joueur = $("#nom").val();
+  $("body").data(joueur);
+  $("#AjoutUser").hide();
+  $("#PartieJeu").show();
+  alert($("body").data());
+})
+
+//#region Morpion Jeu logique
 // Fonction qui vérifie si la case sélectionnée par le joueur est libre
 function estValide(button) {
   return button.innerHTML.length == 0;
@@ -182,4 +199,12 @@ function main() {
   }
 }
 
-main();
+
+//#endregion
+
+//#region Gestion utilisateurs
+
+
+
+//#endregion
+
