@@ -28,8 +28,8 @@ $("#jouerButton").on('click', function () {
     joueurX = $('#nomX').val();
     joueurO = $('#nomO').val();
     $("#PartieJeu").show();
-    $("#AjoutUser").detach();
-    $("#JouerDiv").detach();
+    $("#AjoutUser").hide();
+    $("#JouerDiv").hide();
     main();
 })
 
@@ -51,11 +51,11 @@ function setSymbol(btn, symbole, peutJouer) {
 Fonction qui recherche une combinaison gagnant faite par un joueur 
 et affiche les cases en vert si une combinaison est trouvée
 */
-function rechercherVainqueur(pions, joueurs, tour) {
+function rechercherVainqueur(pions, type, tour) {
     if (
-        pions[0].innerHTML == joueurs[tour] &&
-        pions[1].innerHTML == joueurs[tour] &&
-        pions[2].innerHTML == joueurs[tour]
+        pions[0].innerHTML == type[tour] &&
+        pions[1].innerHTML == type[tour] &&
+        pions[2].innerHTML == type[tour]
     ) {
         pions[0].style.backgroundColor = "#9ACD32";
         pions[1].style.backgroundColor = "#9ACD32";
@@ -64,9 +64,9 @@ function rechercherVainqueur(pions, joueurs, tour) {
     }
 
     if (
-        pions[3].innerHTML == joueurs[tour] &&
-        pions[4].innerHTML == joueurs[tour] &&
-        pions[5].innerHTML == joueurs[tour]
+        pions[3].innerHTML == type[tour] &&
+        pions[4].innerHTML == type[tour] &&
+        pions[5].innerHTML == type[tour]
     ) {
         pions[3].style.backgroundColor = "#9ACD32";
         pions[4].style.backgroundColor = "#9ACD32";
@@ -75,9 +75,9 @@ function rechercherVainqueur(pions, joueurs, tour) {
     }
 
     if (
-        pions[6].innerHTML == joueurs[tour] &&
-        pions[7].innerHTML == joueurs[tour] &&
-        pions[8].innerHTML == joueurs[tour]
+        pions[6].innerHTML == type[tour] &&
+        pions[7].innerHTML == type[tour] &&
+        pions[8].innerHTML == type[tour]
     ) {
         pions[6].style.backgroundColor = "#9ACD32";
         pions[7].style.backgroundColor = "#9ACD32";
@@ -86,9 +86,9 @@ function rechercherVainqueur(pions, joueurs, tour) {
     }
 
     if (
-        pions[0].innerHTML == joueurs[tour] &&
-        pions[3].innerHTML == joueurs[tour] &&
-        pions[6].innerHTML == joueurs[tour]
+        pions[0].innerHTML == type[tour] &&
+        pions[3].innerHTML == type[tour] &&
+        pions[6].innerHTML == type[tour]
     ) {
         pions[0].style.backgroundColor = "#9ACD32";
         pions[3].style.backgroundColor = "#9ACD32";
@@ -97,9 +97,9 @@ function rechercherVainqueur(pions, joueurs, tour) {
     }
 
     if (
-        pions[1].innerHTML == joueurs[tour] &&
-        pions[4].innerHTML == joueurs[tour] &&
-        pions[7].innerHTML == joueurs[tour]
+        pions[1].innerHTML == type[tour] &&
+        pions[4].innerHTML == type[tour] &&
+        pions[7].innerHTML == type[tour]
     ) {
         pions[1].style.backgroundColor = "#9ACD32";
         pions[4].style.backgroundColor = "#9ACD32";
@@ -108,9 +108,9 @@ function rechercherVainqueur(pions, joueurs, tour) {
     }
 
     if (
-        pions[2].innerHTML == joueurs[tour] &&
-        pions[5].innerHTML == joueurs[tour] &&
-        pions[8].innerHTML == joueurs[tour]
+        pions[2].innerHTML == type[tour] &&
+        pions[5].innerHTML == type[tour] &&
+        pions[8].innerHTML == type[tour]
     ) {
         pions[2].style.backgroundColor = "#9ACD32";
         pions[5].style.backgroundColor = "#9ACD32";
@@ -119,9 +119,9 @@ function rechercherVainqueur(pions, joueurs, tour) {
     }
 
     if (
-        pions[0].innerHTML == joueurs[tour] &&
-        pions[4].innerHTML == joueurs[tour] &&
-        pions[8].innerHTML == joueurs[tour]
+        pions[0].innerHTML == type[tour] &&
+        pions[4].innerHTML == type[tour] &&
+        pions[8].innerHTML == type[tour]
     ) {
         pions[0].style.backgroundColor = "#9ACD32";
         pions[4].style.backgroundColor = "#9ACD32";
@@ -130,9 +130,9 @@ function rechercherVainqueur(pions, joueurs, tour) {
     }
 
     if (
-        pions[2].innerHTML == joueurs[tour] &&
-        pions[4].innerHTML == joueurs[tour] &&
-        pions[6].innerHTML == joueurs[tour]
+        pions[2].innerHTML == type[tour] &&
+        pions[4].innerHTML == type[tour] &&
+        pions[6].innerHTML == type[tour]
     ) {
         pions[2].style.backgroundColor = "#9ACD32";
         pions[4].style.backgroundColor = "#9ACD32";
@@ -150,16 +150,7 @@ function matchNul(pions) {
     return true;
 }
 
-// Fonction qui gére l'affichage du statut du jeu en cours
-const AfficheurStatut = function (element) {
-    const affichage = element;
 
-    function setText(message) {
-        affichage.innerHTML = message;
-    }
-
-    return { sendMessage: setText };
-};
 
 // Fonction main qui met en place la logique du jeu du morpion
 function main() {
@@ -168,8 +159,8 @@ function main() {
     const type = ["X", "O"];
     let tour = 0;
     let peutJouer = true;
-    const statut = new AfficheurStatut(document.querySelector("#StatutJeu"));
-    statut.sendMessage(
+    let statut = $("#StatutJeu");
+    statut.html(
         "Le jeu peut commencer ! <br /> " +
         joueurs[tour] +
         " c'est votre tour."
@@ -179,7 +170,7 @@ function main() {
             Cases[i].addEventListener("click", function () {
                 if (!estValide(this)) {
                     if (peutJouer) {
-                        statut.sendMessage(
+                        statut.html(
                             "Case occupée ! <br /> " +
                             joueurs[tour] +
                             " c'est toujours à vous !"
@@ -191,7 +182,7 @@ function main() {
 
                     if (jeuEstFini) {
                         peutJouer = false;
-                        statut.sendMessage(
+                        statut.html(
                             joueurs[tour] +
                             ' a gagné ! <br /> <a href="index.html">Rejouer</a>'
                         );
@@ -200,7 +191,7 @@ function main() {
                     }
                     if (matchNul(Cases)) {
                         peutJouer = false;
-                        statut.sendMessage(
+                        statut.html(
                             'Match Nul ! <br/> <a href="index.html" unset>Rejouer</a>'
                         );
 
@@ -209,7 +200,7 @@ function main() {
                     if (peutJouer) {
                         tour++;
                         tour = tour % 2;
-                        statut.sendMessage(
+                        statut.html(
                             joueurs[tour] + " c'est à vous !"
                         );
                     }
@@ -218,12 +209,3 @@ function main() {
         }
     }
 }
-
-
-//#endregion
-
-//#region Gestion utilisateurs
-
-
-
-//#endregion
