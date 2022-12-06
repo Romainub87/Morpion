@@ -163,8 +163,6 @@ const AfficheurStatut = function (element) {
 
 // Fonction main qui met en place la logique du jeu du morpion
 function main() {
-    alert(joueurO, joueurX);
-    console.log(joueurO, joueurX);
     const Cases = document.querySelectorAll("#Jeu button");
     const joueurs = [joueurX, joueurO];
     const type = ["X", "O"];
