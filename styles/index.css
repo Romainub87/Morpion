@@ -1,15 +1,14 @@
 body {
     animation: wheelHueColor 10s infinite;
     background-color: currentColor;
-    text-align: center;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: justify;
+    font-family: 'Advent Pro';
+    font-weight: bold;
 }
 
 #Jeu {
-    display: inline-block;
     border: 3px solid black;
     border-radius: 25px;
-    margin: 0 auto;
     padding: 10px;
 }
 
@@ -58,7 +57,6 @@ body {
 }
 
 #Jeu div {
-    margin: 0 auto;
     overflow: hidden;
 }
 
@@ -127,7 +125,6 @@ input {
     padding-left: 50px;
     padding-right: 50px;
     font-size: 50px;
-    font-family: 'Advent Pro';
     border-radius: 25px;
     transform: rotate3d(-360deg);
     transition: transform 1000ms ease;
@@ -140,8 +137,6 @@ input {
 
 #TitrePage {
     color: white;
-    font-family: 'Advent Pro';
-    font-weight: bold;
     position: absolute;
     top: 2%;
     right: 1%;
