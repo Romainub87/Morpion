@@ -33,25 +33,11 @@ $("#jouerButton").on('click', function () {
     main();
 })
 
-
-//#region Morpion Jeu logique
-// Fonction qui vérifie si la case sélectionnée par le joueur est libre
-function estValide(button) {
-    return button.innerHTML.length == 0;
-}
-
-// Fonction qui ajoute le symbole correspondant au joueur à la case sélectionnée
-function setSymbol(btn, symbole, peutJouer) {
-    if (peutJouer == 1) {
-        btn.innerHTML = symbole;
-    }
-}
-
 /* 
-Fonction qui recherche une combinaison gagnant faite par un joueur 
+Fonction qui recherche une combinaison gagnante faite par un joueur 
 et affiche les cases en vert si une combinaison est trouvée
 */
-function rechercherVainqueur(pions, type, tour) {
+function Winner(pions, type, tour) {
     if (
         pions[0].innerHTML == type[tour] &&
         pions[1].innerHTML == type[tour] &&
@@ -142,14 +128,12 @@ function rechercherVainqueur(pions, type, tour) {
 }
 
 // Fonction qui détecte si il y a match nul
-function matchNul(pions) {
+function Nul(pions) {
     for (let i = 0, len = pions.length; i < len; i++) {
         if (pions[i].innerHTML.length == 0) return false;
     }
-
     return true;
 }
-
 
 
 // Fonction main qui met en place la logique du jeu du morpion
@@ -168,7 +152,7 @@ function main() {
     if (peutJouer) {
         for (let i = 0, len = Cases.length; i < len; i++) {
             Cases[i].addEventListener("click", function () {
-                if (!estValide(this)) {
+                if ($(this).length === 0) {
                     if (peutJouer) {
                         statut.html(
                             "Case occupée ! <br /> " +
@@ -177,8 +161,10 @@ function main() {
                         );
                     }
                 } else {
-                    setSymbol(this, type[tour], peutJouer);
-                    let jeuEstFini = rechercherVainqueur(Cases, type, tour);
+                    if (peutJouer){
+                        $(this).html(type[tour])
+                    }
+                    let jeuEstFini = Winner(Cases, type, tour);
 
                     if (jeuEstFini) {
                         peutJouer = false;
@@ -189,7 +175,7 @@ function main() {
 
                         return;
                     }
-                    if (matchNul(Cases)) {
+                    if (Nul(Cases)) {
                         peutJouer = false;
                         statut.html(
                             'Match Nul ! <br/> <a href="index.html" unset>Rejouer</a>'
