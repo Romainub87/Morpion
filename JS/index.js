@@ -1,12 +1,36 @@
 // Logique générale dans la page
 
-$(document).ready(function() {
+$(document).ready(function () {
     let active = false;
     if (active === false) {
-        $('#PartieJeu').detach();
+        $('#PartieJeu').hide();
     } else {
         $('#PartieJeu').attach();
     }
+})
+
+if ($("#nom").empty()) {
+    $("#submit").html("Ajouter");
+}
+$('#nom').on('change', function () {
+    $("#submit").html("Ajouter " + $("#nom").val());
+})
+
+let joueurX = null;
+let joueur0 = null;
+
+$("#submit").on('click', function () {
+    
+
+})
+
+$("#jouerButton").on('click', function () {
+    joueurX = $('#nomX').val();
+    joueurO = $('#nomO').val();
+    $("#PartieJeu").show();
+    $("#AjoutUser").detach();
+    $("#JouerDiv").detach();
+    main();
 })
 
 
@@ -127,7 +151,7 @@ function matchNul(pions) {
 }
 
 // Fonction qui gére l'affichage du statut du jeu en cours
-const AfficheurStatut = function(element) {
+const AfficheurStatut = function (element) {
     const affichage = element;
 
     function setText(message) {
@@ -139,8 +163,11 @@ const AfficheurStatut = function(element) {
 
 // Fonction main qui met en place la logique du jeu du morpion
 function main() {
+    alert(joueurO, joueurX);
+    console.log(joueurO, joueurX);
     const Cases = document.querySelectorAll("#Jeu button");
-    const joueurs = ["X", "O"];
+    const joueurs = [joueurX, joueurO];
+    const type = ["X", "O"];
     let tour = 0;
     let peutJouer = true;
     const statut = new AfficheurStatut(document.querySelector("#StatutJeu"));
@@ -151,7 +178,7 @@ function main() {
     );
     if (peutJouer) {
         for (let i = 0, len = Cases.length; i < len; i++) {
-            Cases[i].addEventListener("click", function() {
+            Cases[i].addEventListener("click", function () {
                 if (!estValide(this)) {
                     if (peutJouer) {
                         statut.sendMessage(
@@ -161,8 +188,8 @@ function main() {
                         );
                     }
                 } else {
-                    setSymbol(this, joueurs[tour], peutJouer);
-                    let jeuEstFini = rechercherVainqueur(Cases, joueurs, tour);
+                    setSymbol(this, type[tour], peutJouer);
+                    let jeuEstFini = rechercherVainqueur(Cases, type, tour);
 
                     if (jeuEstFini) {
                         peutJouer = false;
