@@ -9,20 +9,8 @@ $(document).ready(function () {
     }
 })
 
-if ($("#nom").empty()) {
-    $("#submit").html("Ajouter");
-}
-$('#nom').on('change', function () {
-    $("#submit").html("Ajouter " + $("#nom").val());
-})
-
 let joueurX = null;
 let joueur0 = null;
-
-$("#submit").on('click', function () {
-
-
-})
 
 $("#jouerButton").on('click', function () {
     joueurX = $('#nomX').val();
@@ -135,7 +123,6 @@ function Nul(pions) {
     return true;
 }
 
-
 // Fonction main qui met en place la logique du jeu du morpion
 function main() {
     const Cases = document.querySelectorAll("#Jeu button");
@@ -161,7 +148,7 @@ function main() {
                         );
                     }
                 } else {
-                    if (peutJouer){
+                    if (peutJouer) {
                         $(this).html(type[tour])
                     }
                     let jeuEstFini = Winner(Cases, type, tour);
