@@ -20,7 +20,7 @@ let joueurX = null;
 let joueur0 = null;
 
 $("#submit").on('click', function () {
-    
+
 
 })
 
@@ -170,7 +170,7 @@ function main() {
     let peutJouer = true;
     const statut = new AfficheurStatut(document.querySelector("#StatutJeu"));
     statut.sendMessage(
-        "Le jeu peut commencer ! <br /> Joueur " +
+        "Le jeu peut commencer ! <br /> " +
         joueurs[tour] +
         " c'est votre tour."
     );
@@ -180,7 +180,7 @@ function main() {
                 if (!estValide(this)) {
                     if (peutJouer) {
                         statut.sendMessage(
-                            "Case occupée ! <br />Joueur " +
+                            "Case occupée ! <br /> " +
                             joueurs[tour] +
                             " c'est toujours à vous !"
                         );
@@ -192,7 +192,6 @@ function main() {
                     if (jeuEstFini) {
                         peutJouer = false;
                         statut.sendMessage(
-                            "Le joueur " +
                             joueurs[tour] +
                             ' a gagné ! <br /> <a href="index.html">Rejouer</a>'
                         );
@@ -211,7 +210,7 @@ function main() {
                         tour++;
                         tour = tour % 2;
                         statut.sendMessage(
-                            "Joueur " + joueurs[tour] + " c'est à vous !"
+                            joueurs[tour] + " c'est à vous !"
                         );
                     }
                 }
