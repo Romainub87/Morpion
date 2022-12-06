@@ -108,6 +108,7 @@ a {
 
 input {
     margin: 15px;
+    font-size: 25px;
     border-radius: 25px;
     padding: 10px;
 }
@@ -131,8 +132,8 @@ input {
 }
 
 #jouerButton:hover {
-    transform: rotate3d(15, 110, 30, 360deg) scale(1.5);
-    transition: transform 1000ms ease;
+    transform: rotateZ(720deg) scale(1.5);
+    transition: transform 750ms ease;
 }
 
 #TitrePage {
